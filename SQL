@@ -15,4 +15,5 @@ SELECT MAX(price) AS kallim_kasutatud_raamat FROM books WHERE type = 'used';
 SELECT type AS Tüüp, ROUND(AVG(price), 2) AS "Keskmine hind", COUNT(*) AS Hulk FROM books GROUP BY type;
 SELECT title AS Pealkiri, price AS Hind, type AS Tüüp FROM books WHERE type = 'used' AND price > (SELECT AVG(price) FROM books WHERE type = 'new') ORDER BY price ASC;
 SELECT books.title AS Raamat, books.price AS Hind FROM books WHERE books.price > ( SELECT AVG(subquery_books.price) FROM (SELECT books.price FROM books JOIN book_authors ON books.id = book_authors.book_id JOIN ( SELECT book_authors.author_id, COUNT(orders.id) AS sold_count FROM book_authors JOIN orders ON book_authors.book_id = orders.book_id GROUP BY book_authors.author_id ORDER BY sold_count DESC LIMIT 1 ) AS most_sold_author ON book_authors.author_id = most_sold_author.author_id WHERE books.price IS NOT NULL) AS subquery_books);
-
+SELECT title, release_date FROM books WHERE release_date % 2 = 0;
+SELECT language AS language, COUNT(*) AS stock_saldo FROM books GROUP BY language ORDER BY stock_saldo DESC;
